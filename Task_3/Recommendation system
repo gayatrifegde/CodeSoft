@@ -1,0 +1,121 @@
+"""#building a book recommendation system
+import numpy as np
+# Sample user-item ratings matrix (rows: users, columns: books)
+# Each row represents a user's ratings for different books
+ratings = np.array([
+    [5, 4, 0, 0, 0],
+    [0, 0, 5, 4, 0],
+    [0, 0, 0, 0, 5],
+    [4, 5, 0, 0, 0],
+    [0, 0, 4, 5, 0]
+])
+# Calculate the similarity matrix using cosine similarity
+def cosine_similarity(matrix):
+    norm = np.linalg.norm(matrix, axis=1, keepdims=True)
+    normalized_matrix = matrix / (norm + 1e-8)
+    similarity_matrix = np.dot(normalized_matrix, normalized_matrix.T)
+    return similarity_matrix
+similarity_matrix = cosine_similarity(ratings)
+# Function to recommend books to a user
+def recommend_books(user_index, ratings_matrix, similarity_matrix, num_recommendations=3):
+    user_ratings = ratings_matrix[user_index]
+    weighted_sum = np.dot(similarity_matrix[user_index], ratings_matrix)
+    normalized_weighted_sum = weighted_sum / (np.sum(similarity_matrix[user_index]) + 1e-8)
+    
+    # Filter out books the user has already rated
+    unrated_books = np.where(user_ratings == 0)[0]
+    
+    # Sort unrated books based on their predicted ratings
+    recommended_book_indices = np.argsort(normalized_weighted_sum[unrated_books])[::-1][:num_recommendations]
+    
+    return unrated_books[recommended_book_indices], normalized_weighted_sum[recommended_book_indices]
+# Recommend books for user 0
+user_index = 0
+recommended_books, predicted_ratings = recommend_books(user_index, ratings, similarity_matrix)
+print("Recommended books for User", user_index)
+for i, book_index in enumerate(recommended_books):
+    print("Book", book_index, "with predicted rating", predicted_ratings[i])"""
+
+
+
+"""#building a movie recommendation system
+import numpy as np
+# Sample user-item ratings matrix (rows: users, columns: movies)
+# Each row represents a user's ratings for different movies
+ratings = np.array([
+    [5, 6, 0, 0, 0],
+    [0, 0, 5, 3, 0],
+    [0, 0, 0, 0, 5],
+    [4, 5, 0, 0, 0],
+    [0, 0, 4, 5, 0]
+])
+# Calculate the similarity matrix using cosine similarity
+def cosine_similarity(matrix):
+    norm = np.linalg.norm(matrix, axis=1, keepdims=True)
+    normalized_matrix = matrix / (norm + 1e-8)
+    similarity_matrix = np.dot(normalized_matrix, normalized_matrix.T)
+    return similarity_matrix
+similarity_matrix = cosine_similarity(ratings)
+# Function to recommend movies to a user
+def recommend_movies(user_index, ratings_matrix, similarity_matrix, num_recommendations=3):
+    user_ratings = ratings_matrix[user_index]
+    weighted_sum = np.dot(similarity_matrix[user_index], ratings_matrix)
+    normalized_weighted_sum = weighted_sum / (np.sum(similarity_matrix[user_index]) + 1e-8)
+    
+    # Filter out movies the user has already rated
+    unrated_movies = np.where(user_ratings == 0)[0]
+    
+    # Sort unrated movies based on their predicted ratings
+    recommended_movie_indices = np.argsort(normalized_weighted_sum[unrated_movies])[::-1][:num_recommendations]
+    recommended_ratings = normalized_weighted_sum[recommended_movie_indices]
+    
+    return recommended_movie_indices, recommended_ratings
+# Recommend movies for user 0
+user_index = 0
+recommended_movies, predicted_ratings = recommend_movies(user_index, ratings, similarity_matrix)
+print("Recommended movies for User", user_index)
+for i, movie_index in enumerate(recommended_movies):
+    print("Movie", movie_index, "with predicted rating", predicted_ratings[i])"""
+
+
+
+"""#building a products recommendation system
+import numpy as np
+# Sample user-item ratings matrix (rows: users, columns: products)
+# Each row represents a user's ratings for different products
+ratings = np.array([
+    [5, 4, 0, 0, 0],
+    [0, 0, 5, 4, 0],
+    [0, 0, 0, 0, 5],
+    [4, 5, 0, 0, 0],
+    [0, 0, 5, 6, 0]
+])
+# Calculate the similarity matrix using cosine similarity
+def cosine_similarity(matrix):
+    norm = np.linalg.norm(matrix, axis=1, keepdims=True)
+    normalized_matrix = matrix / (norm + 1e-8)
+    similarity_matrix = np.dot(normalized_matrix, normalized_matrix.T)
+    return similarity_matrix
+similarity_matrix = cosine_similarity(ratings)
+# Function to recommend products to a user
+def recommend_products(user_index, ratings_matrix, similarity_matrix, num_recommendations=3):
+    user_ratings = ratings_matrix[user_index]
+    weighted_sum = np.dot(similarity_matrix[user_index], ratings_matrix)
+    normalized_weighted_sum = weighted_sum / (np.sum(similarity_matrix[user_index]) + 1e-8)
+    
+    # Filter out products the user has already rated
+    unrated_products = np.where(user_ratings == 0)[0]
+    
+    # Sort unrated products based on their predicted ratings
+    recommended_product_indices = np.argsort(normalized_weighted_sum[unrated_products])[::-1][:num_recommendations]
+    recommended_ratings = normalized_weighted_sum[recommended_product_indices]
+    
+    return recommended_product_indices, recommended_ratings
+# Input: number of recommendations
+num_recommendations = int(input("Enter the number of product recommendations: "))
+# Recommend products for user 0
+user_index = 0
+recommended_products, predicted_ratings = recommend_products(user_index, ratings, similarity_matrix, num_recommendations)
+print("Recommended products for User", user_index)
+for i, product_index in enumerate(recommended_products):
+    print("Product", product_index, "with predicted rating", predicted_ratings[i])"""
